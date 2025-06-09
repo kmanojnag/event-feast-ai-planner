@@ -89,7 +89,8 @@ const ChatAssistant = () => {
       <div className="fixed bottom-4 right-4 z-50">
         <Button
           onClick={() => setIsMinimized(false)}
-          className="bg-orange-400 hover:bg-orange-500 rounded-full w-14 h-14 shadow-lg"
+          style={{ backgroundColor: '#fff200' }}
+          className="hover:brightness-90 rounded-full w-14 h-14 shadow-lg text-black"
         >
           <Bot className="h-6 w-6" />
         </Button>
@@ -99,8 +100,8 @@ const ChatAssistant = () => {
 
   return (
     <div className="fixed bottom-4 right-4 z-50 w-96 max-w-[calc(100vw-2rem)]">
-      <Card className="shadow-2xl border-2 border-orange-200">
-        <CardHeader className="bg-orange-400 text-white rounded-t-lg">
+      <Card className="shadow-2xl border-2" style={{ borderColor: '#fff200' }}>
+        <CardHeader style={{ backgroundColor: '#fff200' }} className="text-black rounded-t-lg">
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg flex items-center">
               <Bot className="h-5 w-5 mr-2" />
@@ -110,14 +111,14 @@ const ChatAssistant = () => {
               variant="ghost"
               size="sm"
               onClick={() => setIsMinimized(true)}
-              className="text-white hover:text-orange-100"
+              className="text-black hover:text-gray-700 hover:bg-yellow-100"
             >
               <Minimize2 className="h-4 w-4" />
             </Button>
           </div>
           <div className="flex items-center space-x-1">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="text-sm text-orange-100">Online</span>
+            <span className="text-sm text-gray-700">Online</span>
           </div>
         </CardHeader>
 
@@ -134,9 +135,9 @@ const ChatAssistant = () => {
                 >
                   <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                     message.sender === 'user' 
-                      ? 'bg-orange-400 text-white' 
+                      ? 'text-black' 
                       : 'bg-gray-200 text-gray-600'
-                  }`}>
+                  }`} style={message.sender === 'user' ? { backgroundColor: '#fff200' } : {}}>
                     {message.sender === 'user' ? (
                       <User className="h-4 w-4" />
                     ) : (
@@ -145,9 +146,9 @@ const ChatAssistant = () => {
                   </div>
                   <div className={`max-w-[80%] p-3 rounded-lg ${
                     message.sender === 'user'
-                      ? 'bg-orange-400 text-white'
+                      ? 'text-black'
                       : 'bg-gray-100 text-gray-900'
-                  }`}>
+                  }`} style={message.sender === 'user' ? { backgroundColor: '#fff200' } : {}}>
                     <p className="text-sm">{message.content}</p>
                     <span className="text-xs opacity-70 mt-1 block">
                       {message.timestamp.toLocaleTimeString([], { 
@@ -193,7 +194,8 @@ const ChatAssistant = () => {
               />
               <Button 
                 onClick={handleSendMessage}
-                className="bg-orange-400 hover:bg-orange-500"
+                style={{ backgroundColor: '#fff200' }}
+                className="hover:brightness-90 text-black"
                 disabled={!inputMessage.trim()}
               >
                 <Send className="h-4 w-4" />

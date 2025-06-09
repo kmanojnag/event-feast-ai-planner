@@ -1,4 +1,5 @@
 
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -52,6 +53,11 @@
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Yellow theme colors */
+    --yellow-primary: 60 100% 50%; /* #fff200 */
+    --yellow-hover: 58 100% 45%; /* Slightly darker for hover */
+    --yellow-light: 60 100% 90%; /* Light yellow for borders/backgrounds */
   }
 
   .dark {
@@ -90,6 +96,11 @@
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Yellow theme colors for dark mode */
+    --yellow-primary: 60 100% 50%; /* #fff200 */
+    --yellow-hover: 58 100% 45%; /* Slightly darker for hover */
+    --yellow-light: 60 100% 20%; /* Darker yellow for dark mode */
   }
 }
 
@@ -102,3 +113,4 @@
     @apply bg-background text-foreground;
   }
 }
+
