@@ -9,6 +9,185 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      events: {
+        Row: {
+          budget: number | null
+          created_at: string
+          cuisine_type: string
+          date: string
+          guest_count: number
+          id: string
+          location: string
+          name: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          budget?: number | null
+          created_at?: string
+          cuisine_type: string
+          date: string
+          guest_count: number
+          id?: string
+          location: string
+          name: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          budget?: number | null
+          created_at?: string
+          cuisine_type?: string
+          date?: string
+          guest_count?: number
+          id?: string
+          location?: string
+          name?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      food_items: {
+        Row: {
+          created_at: string
+          cuisine_type: string
+          description: string | null
+          id: string
+          image_url: string | null
+          is_available: boolean | null
+          is_vegan: boolean | null
+          is_vegetarian: boolean | null
+          name: string
+          price_per_tray: number
+          provider_id: string
+          tray_size: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          cuisine_type: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_available?: boolean | null
+          is_vegan?: boolean | null
+          is_vegetarian?: boolean | null
+          name: string
+          price_per_tray: number
+          provider_id: string
+          tray_size: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          cuisine_type?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_available?: boolean | null
+          is_vegan?: boolean | null
+          is_vegetarian?: boolean | null
+          name?: string
+          price_per_tray?: number
+          provider_id?: string
+          tray_size?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      order_items: {
+        Row: {
+          created_at: string
+          food_item_id: string
+          id: string
+          order_id: string
+          quantity: number
+          subtotal: number
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string
+          food_item_id: string
+          id?: string
+          order_id: string
+          quantity: number
+          subtotal: number
+          unit_price: number
+        }
+        Update: {
+          created_at?: string
+          food_item_id?: string
+          id?: string
+          order_id?: string
+          quantity?: number
+          subtotal?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_food_item_id_fkey"
+            columns: ["food_item_id"]
+            isOneToOne: false
+            referencedRelation: "food_items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          created_at: string
+          customer_id: string
+          event_id: string
+          id: string
+          provider_id: string
+          special_instructions: string | null
+          status: string
+          total_amount: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          customer_id: string
+          event_id: string
+          id?: string
+          provider_id: string
+          special_instructions?: string | null
+          status?: string
+          total_amount: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          customer_id?: string
+          event_id?: string
+          id?: string
+          provider_id?: string
+          special_instructions?: string | null
+          status?: string
+          total_amount?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "orders_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string | null
@@ -33,6 +212,36 @@ export type Database = {
           name?: string | null
           role?: Database["public"]["Enums"]["user_role"]
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      provider_availability: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          is_available: boolean
+          max_orders: number | null
+          notes: string | null
+          provider_id: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: string
+          is_available?: boolean
+          max_orders?: number | null
+          notes?: string | null
+          provider_id: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          is_available?: boolean
+          max_orders?: number | null
+          notes?: string | null
+          provider_id?: string
         }
         Relationships: []
       }

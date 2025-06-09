@@ -1,12 +1,17 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from '@/contexts/AuthContext';
-import { ChefHat, DollarSign, Calendar, Users, LogOut, TrendingUp } from 'lucide-react';
+import { ChefHat, DollarSign, Calendar, Users, LogOut, TrendingUp, Plus } from 'lucide-react';
+import { useFoodItems } from '@/hooks/useFoodItems';
+import AddFoodItemModal from '@/components/AddFoodItemModal';
+import FoodItemCard from '@/components/FoodItemCard';
 
 const ProviderDashboard = () => {
   const { profile, signOut } = useAuth();
+  const { foodItems, loading } = useFoodItems();
+  const [showAddModal, setShowAddModal] = useState(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 to-red-50">
@@ -33,7 +38,7 @@ const ProviderDashboard = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-gray-900 mb-2">Provider Dashboard</h2>
-          <p className="text-gray-600">Manage your catering business and events</p>
+          <p className="text-gray-600">Manage your catering business and menu</p>
         </div>
 
         {/* Stats Overview */}
@@ -42,10 +47,10 @@ const ProviderDashboard = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">Total Revenue</p>
-                  <p className="text-2xl font-bold">₹2,45,000</p>
+                  <p className="text-sm text-gray-600">Menu Items</p>
+                  <p className="text-2xl font-bold">{foodItems.length}</p>
                 </div>
-                <DollarSign className="h-8 w-8 text-green-600" />
+                <ChefHat className="h-8 w-8 text-orange-600" />
               </div>
             </CardContent>
           </Card>
@@ -54,8 +59,8 @@ const ProviderDashboard = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">Events This Month</p>
-                  <p className="text-2xl font-bold">12</p>
+                  <p className="text-sm text-gray-600">Active Orders</p>
+                  <p className="text-2xl font-bold">5</p>
                 </div>
                 <Calendar className="h-8 w-8 text-blue-600" />
               </div>
@@ -66,10 +71,10 @@ const ProviderDashboard = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">Total Customers</p>
-                  <p className="text-2xl font-bold">156</p>
+                  <p className="text-sm text-gray-600">This Month Revenue</p>
+                  <p className="text-2xl font-bold">₹45,000</p>
                 </div>
-                <Users className="h-8 w-8 text-purple-600" />
+                <DollarSign className="h-8 w-8 text-green-600" />
               </div>
             </CardContent>
           </Card>
@@ -78,96 +83,70 @@ const ProviderDashboard = () => {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-600">Growth Rate</p>
-                  <p className="text-2xl font-bold">+15%</p>
+                  <p className="text-sm text-gray-600">Customer Rating</p>
+                  <p className="text-2xl font-bold">4.8</p>
                 </div>
-                <TrendingUp className="h-8 w-8 text-orange-600" />
+                <TrendingUp className="h-8 w-8 text-purple-600" />
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardContent className="p-6 text-center">
-              <ChefHat className="h-12 w-12 mx-auto mb-4" style={{ color: '#df7234' }} />
-              <h3 className="font-semibold text-lg mb-2">Manage Menu</h3>
-              <p className="text-gray-600 text-sm">Update your menu items and pricing</p>
-            </CardContent>
-          </Card>
+        {/* Menu Management Section */}
+        <div className="mb-8">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-2xl font-bold text-gray-900">Your Menu</h3>
+            <Button onClick={() => setShowAddModal(true)} className="bg-orange-600 hover:bg-orange-700">
+              <Plus className="h-4 w-4 mr-2" />
+              Add Menu Item
+            </Button>
+          </div>
 
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardContent className="p-6 text-center">
-              <Calendar className="h-12 w-12 mx-auto mb-4 text-green-600" />
-              <h3 className="font-semibold text-lg mb-2">View Bookings</h3>
-              <p className="text-gray-600 text-sm">Check upcoming events and bookings</p>
-            </CardContent>
-          </Card>
-
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer">
-            <CardContent className="p-6 text-center">
-              <DollarSign className="h-12 w-12 mx-auto mb-4 text-blue-600" />
-              <h3 className="font-semibold text-lg mb-2">Analytics</h3>
-              <p className="text-gray-600 text-sm">View revenue and performance metrics</p>
-            </CardContent>
-          </Card>
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="animate-pulse">
+                  <div className="bg-gray-200 rounded-lg h-64"></div>
+                </div>
+              ))}
+            </div>
+          ) : foodItems.length === 0 ? (
+            <Card className="text-center py-12">
+              <CardContent>
+                <ChefHat className="h-16 w-16 mx-auto text-gray-400 mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">No menu items yet</h3>
+                <p className="text-gray-600 mb-4">Start by adding your first menu item to showcase your offerings</p>
+                <Button onClick={() => setShowAddModal(true)} className="bg-orange-600 hover:bg-orange-700">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add Your First Item
+                </Button>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {foodItems.map((item) => (
+                <FoodItemCard key={item.id} item={item} />
+              ))}
+            </div>
+          )}
         </div>
 
-        {/* Recent Activity */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Orders</CardTitle>
-              <CardDescription>Latest catering requests</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {[
-                  { event: "Wedding Reception", client: "Priya Sharma", date: "Dec 15", amount: "₹25,000" },
-                  { event: "Birthday Party", client: "Rahul Gupta", date: "Dec 12", amount: "₹8,500" },
-                  { event: "Corporate Event", client: "TechCorp", date: "Dec 10", amount: "₹15,000" }
-                ].map((order, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                    <div>
-                      <h4 className="font-medium">{order.event}</h4>
-                      <p className="text-sm text-gray-600">{order.client} • {order.date}</p>
-                    </div>
-                    <span className="font-semibold text-green-600">{order.amount}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Performance Metrics</CardTitle>
-              <CardDescription>Your business insights</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Customer Rating</span>
-                  <span className="font-semibold">4.8/5</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Response Time</span>
-                  <span className="font-semibold">2 hours</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Completion Rate</span>
-                  <span className="font-semibold">98%</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Repeat Customers</span>
-                  <span className="font-semibold">65%</span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        {/* Recent Orders Section */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Recent Orders</CardTitle>
+            <CardDescription>Latest catering requests</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-center py-8">
+              <Calendar className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+              <p className="text-gray-600">No orders yet. Complete your menu to start receiving orders!</p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
+
+      <AddFoodItemModal open={showAddModal} onClose={() => setShowAddModal(false)} />
     </div>
   );
 };
