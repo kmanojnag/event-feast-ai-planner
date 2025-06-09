@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -89,9 +90,9 @@ const ChatAssistant = () => {
         <Button
           onClick={() => setIsMinimized(false)}
           className="rounded-full w-14 h-14 shadow-lg text-white"
-          style={{ backgroundColor: '#f49939' }}
-          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e88a2e'}
-          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#f49939'}
+          style={{ backgroundColor: '#ff7e00' }}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e56e00'}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ff7e00'}
         >
           <Bot className="h-6 w-6" />
         </Button>
@@ -101,8 +102,8 @@ const ChatAssistant = () => {
 
   return (
     <div className="fixed bottom-4 right-4 z-50 w-96 max-w-[calc(100vw-2rem)]">
-      <Card className="shadow-2xl border-2" style={{ borderColor: '#f5a84d' }}>
-        <CardHeader className="text-white rounded-t-lg" style={{ backgroundColor: '#f49939' }}>
+      <Card className="shadow-2xl border-2" style={{ borderColor: '#ff9033' }}>
+        <CardHeader className="text-white rounded-t-lg" style={{ backgroundColor: '#ff7e00' }}>
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg flex items-center">
               <Bot className="h-5 w-5 mr-2" />
@@ -142,7 +143,7 @@ const ChatAssistant = () => {
                       ? 'text-white' 
                       : 'bg-gray-200 text-gray-600'
                   }`}
-                  style={message.sender === 'user' ? { backgroundColor: '#f49939' } : {}}
+                  style={message.sender === 'user' ? { backgroundColor: '#ff7e00' } : {}}
                   >
                     {message.sender === 'user' ? (
                       <User className="h-4 w-4" />
@@ -155,7 +156,7 @@ const ChatAssistant = () => {
                       ? 'text-white'
                       : 'bg-gray-100 text-gray-900'
                   }`}
-                  style={message.sender === 'user' ? { backgroundColor: '#f49939' } : {}}
+                  style={message.sender === 'user' ? { backgroundColor: '#ff7e00' } : {}}
                   >
                     <p className="text-sm">{message.content}</p>
                     <span className="text-xs opacity-70 mt-1 block">
@@ -203,9 +204,9 @@ const ChatAssistant = () => {
               <Button 
                 onClick={handleSendMessage}
                 className="text-white"
-                style={{ backgroundColor: '#f49939' }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e88a2e'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#f49939'}
+                style={{ backgroundColor: '#ff7e00' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e56e00'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ff7e00'}
                 disabled={!inputMessage.trim()}
               >
                 <Send className="h-4 w-4" />
