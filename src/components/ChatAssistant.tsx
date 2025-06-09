@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -88,7 +89,10 @@ const ChatAssistant = () => {
       <div className="fixed bottom-4 right-4 z-50">
         <Button
           onClick={() => setIsMinimized(false)}
-          className="bg-orange-200 hover:bg-orange-300 rounded-full w-14 h-14 shadow-lg text-black"
+          className="rounded-full w-14 h-14 shadow-lg text-white"
+          style={{ backgroundColor: '#FFA500' }}
+          onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#FF8C00'}
+          onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FFA500'}
         >
           <Bot className="h-6 w-6" />
         </Button>
@@ -98,8 +102,8 @@ const ChatAssistant = () => {
 
   return (
     <div className="fixed bottom-4 right-4 z-50 w-96 max-w-[calc(100vw-2rem)]">
-      <Card className="shadow-2xl border-2 border-orange-100">
-        <CardHeader className="bg-orange-200 text-black rounded-t-lg">
+      <Card className="shadow-2xl border-2" style={{ borderColor: '#FFB84D' }}>
+        <CardHeader className="text-white rounded-t-lg" style={{ backgroundColor: '#FFA500' }}>
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg flex items-center">
               <Bot className="h-5 w-5 mr-2" />
@@ -109,14 +113,17 @@ const ChatAssistant = () => {
               variant="ghost"
               size="sm"
               onClick={() => setIsMinimized(true)}
-              className="text-black hover:text-gray-700 hover:bg-orange-100"
+              className="text-white hover:text-gray-200"
+              style={{ '--tw-bg-opacity': '0.1' } as React.CSSProperties}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
             >
               <Minimize2 className="h-4 w-4" />
             </Button>
           </div>
           <div className="flex items-center space-x-1">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="text-sm text-gray-700">Online</span>
+            <span className="text-sm text-gray-100">Online</span>
           </div>
         </CardHeader>
 
@@ -133,9 +140,11 @@ const ChatAssistant = () => {
                 >
                   <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                     message.sender === 'user' 
-                      ? 'bg-orange-200 text-black' 
+                      ? 'text-white' 
                       : 'bg-gray-200 text-gray-600'
-                  }`}>
+                  }`}
+                  style={message.sender === 'user' ? { backgroundColor: '#FFA500' } : {}}
+                  >
                     {message.sender === 'user' ? (
                       <User className="h-4 w-4" />
                     ) : (
@@ -144,9 +153,11 @@ const ChatAssistant = () => {
                   </div>
                   <div className={`max-w-[80%] p-3 rounded-lg ${
                     message.sender === 'user'
-                      ? 'bg-orange-200 text-black'
+                      ? 'text-white'
                       : 'bg-gray-100 text-gray-900'
-                  }`}>
+                  }`}
+                  style={message.sender === 'user' ? { backgroundColor: '#FFA500' } : {}}
+                  >
                     <p className="text-sm">{message.content}</p>
                     <span className="text-xs opacity-70 mt-1 block">
                       {message.timestamp.toLocaleTimeString([], { 
@@ -192,7 +203,10 @@ const ChatAssistant = () => {
               />
               <Button 
                 onClick={handleSendMessage}
-                className="bg-orange-200 hover:bg-orange-300 text-black"
+                className="text-white"
+                style={{ backgroundColor: '#FFA500' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#FF8C00'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#FFA500'}
                 disabled={!inputMessage.trim()}
               >
                 <Send className="h-4 w-4" />
