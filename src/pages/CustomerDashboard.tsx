@@ -38,15 +38,15 @@ const CustomerDashboard = () => {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer" asChild>
-            <Link to="/plan-event">
+          <Link to="/plan-event">
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer">
               <CardContent className="p-6 text-center">
                 <Calendar className="h-12 w-12 mx-auto mb-4" style={{ color: '#df7234' }} />
                 <h3 className="font-semibold text-lg mb-2">Plan New Event</h3>
                 <p className="text-gray-600 text-sm">Start planning your next celebration</p>
               </CardContent>
-            </Link>
-          </Card>
+            </Card>
+          </Link>
 
           <Card className="hover:shadow-lg transition-shadow cursor-pointer">
             <CardContent className="p-6 text-center">
