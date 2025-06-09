@@ -23,10 +23,10 @@ const Index = () => {
             </nav>
             <div className="flex items-center space-x-4">
               <Button variant="outline" asChild>
-                <Link to="/login">Login</Link>
+                <Link to="/auth">Login</Link>
               </Button>
               <Button asChild>
-                <Link to="/signup">Sign Up</Link>
+                <Link to="/auth">Sign Up</Link>
               </Button>
             </div>
           </div>
@@ -66,7 +66,7 @@ const Index = () => {
                 onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#df7234'}
                 asChild
               >
-                <Link to="/plan-event">
+                <Link to="/auth">
                   <Search className="mr-2 h-4 w-4" />
                   Find Caterers
                 </Link>
