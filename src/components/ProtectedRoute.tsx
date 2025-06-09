@@ -23,13 +23,27 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole 
   }
 
   if (!user) {
+    console.log('Unauthorized access attempt - redirecting to auth');
     return <Navigate to="/auth" replace />;
   }
 
   if (requiredRole && profile?.role !== requiredRole) {
+    console.log('Insufficient role permissions:', { 
+      required: requiredRole, 
+      actual: profile?.role,
+      userId: user.id
+    });
+    
     // Redirect to their appropriate dashboard
     return <Navigate to={`/dashboard/${profile?.role}`} replace />;
   }
+
+  // Log successful authorized access
+  console.log('Authorized access granted:', {
+    userId: user.id,
+    role: profile?.role,
+    requiredRole
+  });
 
   return <>{children}</>;
 };
