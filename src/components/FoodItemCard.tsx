@@ -33,7 +33,6 @@ const FoodItemCard: React.FC<FoodItemCardProps> = ({ item }) => {
           <Switch
             checked={item.is_available}
             onCheckedChange={handleAvailabilityToggle}
-            size="sm"
           />
         </div>
         
