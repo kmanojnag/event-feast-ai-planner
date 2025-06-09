@@ -89,7 +89,7 @@ const ChatAssistant = () => {
       <div className="fixed bottom-4 right-4 z-50">
         <Button
           onClick={() => setIsMinimized(false)}
-          className="bg-orange-600 hover:bg-orange-700 rounded-full w-14 h-14 shadow-lg"
+          className="bg-orange-400 hover:bg-orange-500 rounded-full w-14 h-14 shadow-lg"
         >
           <Bot className="h-6 w-6" />
         </Button>
@@ -100,7 +100,7 @@ const ChatAssistant = () => {
   return (
     <div className="fixed bottom-4 right-4 z-50 w-96 max-w-[calc(100vw-2rem)]">
       <Card className="shadow-2xl border-2 border-orange-200">
-        <CardHeader className="bg-orange-600 text-white rounded-t-lg">
+        <CardHeader className="bg-orange-400 text-white rounded-t-lg">
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg flex items-center">
               <Bot className="h-5 w-5 mr-2" />
@@ -110,7 +110,7 @@ const ChatAssistant = () => {
               variant="ghost"
               size="sm"
               onClick={() => setIsMinimized(true)}
-              className="text-white hover:text-orange-200"
+              className="text-white hover:text-orange-100"
             >
               <Minimize2 className="h-4 w-4" />
             </Button>
@@ -134,7 +134,7 @@ const ChatAssistant = () => {
                 >
                   <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                     message.sender === 'user' 
-                      ? 'bg-orange-600 text-white' 
+                      ? 'bg-orange-400 text-white' 
                       : 'bg-gray-200 text-gray-600'
                   }`}>
                     {message.sender === 'user' ? (
@@ -145,7 +145,7 @@ const ChatAssistant = () => {
                   </div>
                   <div className={`max-w-[80%] p-3 rounded-lg ${
                     message.sender === 'user'
-                      ? 'bg-orange-600 text-white'
+                      ? 'bg-orange-400 text-white'
                       : 'bg-gray-100 text-gray-900'
                   }`}>
                     <p className="text-sm">{message.content}</p>
@@ -193,7 +193,7 @@ const ChatAssistant = () => {
               />
               <Button 
                 onClick={handleSendMessage}
-                className="bg-orange-600 hover:bg-orange-700"
+                className="bg-orange-400 hover:bg-orange-500"
                 disabled={!inputMessage.trim()}
               >
                 <Send className="h-4 w-4" />
