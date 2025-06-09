@@ -14,7 +14,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold" style={{ color: '#ff7e00' }}>EventBite</h1>
+              <h1 className="text-2xl font-bold" style={{ color: '#df7234' }}>EventBite</h1>
             </div>
             <nav className="hidden md:flex space-x-8">
               <Link to="/restaurants" className="text-gray-700 hover:text-orange-600 transition-colors">Restaurants</Link>
@@ -38,7 +38,7 @@ const Index = () => {
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
             Perfect Catering for
-            <span className="block" style={{ color: '#ff7e00' }}>EVERY Event</span>
+            <span className="block" style={{ color: '#df7234' }}>EVERY Event</span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
             From intimate gatherings to grand celebrations, discover the best restaurants, caterers, and cloud kitchens for your special events. AI-powered planning makes it effortless.
@@ -61,9 +61,9 @@ const Index = () => {
               </div>
               <Button 
                 className="w-full text-white"
-                style={{ backgroundColor: '#ff7e00' }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e56e00'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ff7e00'}
+                style={{ backgroundColor: '#df7234' }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#c86a2f'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#df7234'}
                 asChild
               >
                 <Link to="/plan-event">
@@ -77,19 +77,19 @@ const Index = () => {
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto">
             <div className="text-center">
-              <div className="text-3xl font-bold" style={{ color: '#ff7e00' }}>500+</div>
+              <div className="text-3xl font-bold" style={{ color: '#df7234' }}>500+</div>
               <div className="text-gray-600">Restaurants</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold" style={{ color: '#ff7e00' }}>200+</div>
+              <div className="text-3xl font-bold" style={{ color: '#df7234' }}>200+</div>
               <div className="text-gray-600">Caterers</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold" style={{ color: '#ff7e00' }}>50K+</div>
+              <div className="text-3xl font-bold" style={{ color: '#df7234' }}>50K+</div>
               <div className="text-gray-600">Events Served</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold" style={{ color: '#ff7e00' }}>4.8</div>
+              <div className="text-3xl font-bold" style={{ color: '#df7234' }}>4.8</div>
               <div className="text-gray-600 flex items-center justify-center">
                 <Star className="h-4 w-4 fill-current text-yellow-400 mr-1" />
                 Rating
@@ -114,8 +114,8 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <Card className="border-none shadow-lg hover:shadow-xl transition-shadow">
               <CardHeader>
-                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: '#ffcc99' }}>
-                  <Search className="h-6 w-6" style={{ color: '#ff7e00' }} />
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: '#f4d4c0' }}>
+                  <Search className="h-6 w-6" style={{ color: '#df7234' }} />
                 </div>
                 <CardTitle>Smart Discovery</CardTitle>
                 <CardDescription>
