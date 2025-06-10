@@ -198,15 +198,61 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-8 mt-12">
-        <div className="container mx-auto px-4 text-center">
-          <div className="flex items-center justify-center space-x-2 mb-4">
-            <ChefHat className="h-6 w-6" />
-            <span className="text-xl font-bold">FoodieLink</span>
+      <footer className="bg-gray-900 text-white py-12 mt-12">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Brand Section */}
+            <div className="md:col-span-1">
+              <div className="flex items-center space-x-2 mb-4">
+                <ChefHat className="h-6 w-6" />
+                <span className="text-xl font-bold">FoodieLink</span>
+              </div>
+              <p className="text-gray-400">
+                Connecting food lovers with amazing providers since 2024
+              </p>
+            </div>
+
+            {/* For Customers */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4">For Customers</h3>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="/restaurants" className="hover:text-white transition-colors">Browse Restaurants</a></li>
+                <li><a href="/caterers" className="hover:text-white transition-colors">Find Caterers</a></li>
+                <li><a href="/food-items" className="hover:text-white transition-colors">Explore Food Items</a></li>
+                <li><a href="/plan-event" className="hover:text-white transition-colors">Plan an Event</a></li>
+              </ul>
+            </div>
+
+            {/* For Partners */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4">For Partners</h3>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="/auth" className="hover:text-white transition-colors">Join as Provider</a></li>
+                <li><a href="/dashboard/provider" className="hover:text-white transition-colors">Provider Dashboard</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Partner Resources</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">API Documentation</a></li>
+              </ul>
+            </div>
+
+            {/* Company */}
+            <div>
+              <h3 className="text-lg font-semibold mb-4">Company</h3>
+              <ul className="space-y-2 text-gray-400">
+                <li><a href="#" className="hover:text-white transition-colors">About Us</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Privacy Policy</a></li>
+                <li><a href="#" className="hover:text-white transition-colors">Terms of Service</a></li>
+              </ul>
+            </div>
           </div>
-          <p className="text-gray-400">
-            Connecting food lovers with amazing providers since 2024
-          </p>
+
+          {/* Copyright */}
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center">
+            <p className="text-gray-400">
+              © 2024 FoodieLink. All rights reserved.
+            </p>
+          </div>
         </div>
       </footer>
     </div>
