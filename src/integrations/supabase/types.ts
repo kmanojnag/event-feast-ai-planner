@@ -102,13 +102,6 @@ export type Database = {
             foreignKeyName: "food_items_provider_fkey"
             columns: ["provider_id"]
             isOneToOne: false
-            referencedRelation: "provider_stats"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "food_items_provider_fkey"
-            columns: ["provider_id"]
-            isOneToOne: false
             referencedRelation: "providers"
             referencedColumns: ["id"]
           },
@@ -337,13 +330,6 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: [
-          {
-            foreignKeyName: "reviews_provider_id_fkey"
-            columns: ["provider_id"]
-            isOneToOne: false
-            referencedRelation: "provider_stats"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "reviews_provider_id_fkey"
             columns: ["provider_id"]
