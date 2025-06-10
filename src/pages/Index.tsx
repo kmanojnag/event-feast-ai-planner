@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { ChefHat, Calendar, Users, Star, UtensilsCrossed, CookingPot } from "lucide-react";
+import { ChefHat, Calendar, Users, Star, UtensilsCrossed, CookingPot, Search, DollarSign, Bot } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -122,7 +122,7 @@ const Index = () => {
         <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
           Why Choose FoodieLink?
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card>
             <CardHeader className="text-center">
               <Calendar className="h-8 w-8 text-orange-600 mx-auto mb-2" />
@@ -155,6 +155,42 @@ const Index = () => {
             <CardContent>
               <p className="text-gray-600 text-center">
                 Read reviews and ratings from real customers
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="text-center">
+              <Search className="h-8 w-8 text-orange-600 mx-auto mb-2" />
+              <CardTitle>Smart Discovery</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600 text-center">
+                Find the perfect food providers with intelligent search and recommendations
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="text-center">
+              <DollarSign className="h-8 w-8 text-orange-600 mx-auto mb-2" />
+              <CardTitle>Tray-Based Pricing</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600 text-center">
+                Transparent, flexible pricing based on serving trays for easy budgeting
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="text-center">
+              <Bot className="h-8 w-8 text-orange-600 mx-auto mb-2" />
+              <CardTitle>AI Assistant</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-gray-600 text-center">
+                Get personalized recommendations and instant support from our AI assistant
               </p>
             </CardContent>
           </Card>
