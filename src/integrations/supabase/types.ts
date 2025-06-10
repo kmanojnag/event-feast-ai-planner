@@ -97,7 +97,22 @@ export type Database = {
           tray_size?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "food_items_provider_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "provider_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "food_items_provider_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "providers"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       order_items: {
         Row: {
@@ -245,9 +260,113 @@ export type Database = {
         }
         Relationships: []
       }
+      providers: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          email: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          location: string
+          name: string
+          phone: string | null
+          provider_type: Database["public"]["Enums"]["provider_type"]
+          updated_at: string | null
+          user_id: string
+          website: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          email?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          location: string
+          name: string
+          phone?: string | null
+          provider_type: Database["public"]["Enums"]["provider_type"]
+          updated_at?: string | null
+          user_id: string
+          website?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          email?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          location?: string
+          name?: string
+          phone?: string | null
+          provider_type?: Database["public"]["Enums"]["provider_type"]
+          updated_at?: string | null
+          user_id?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
+      reviews: {
+        Row: {
+          comment: string | null
+          created_at: string | null
+          customer_id: string
+          id: string
+          provider_id: string
+          rating: number
+          updated_at: string | null
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string | null
+          customer_id: string
+          id?: string
+          provider_id: string
+          rating: number
+          updated_at?: string | null
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string | null
+          customer_id?: string
+          id?: string
+          provider_id?: string
+          rating?: number
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reviews_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "provider_stats"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reviews_provider_id_fkey"
+            columns: ["provider_id"]
+            isOneToOne: false
+            referencedRelation: "providers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
-      [_ in never]: never
+      provider_stats: {
+        Row: {
+          average_rating: number | null
+          food_item_count: number | null
+          id: string | null
+          location: string | null
+          name: string | null
+          provider_type: Database["public"]["Enums"]["provider_type"] | null
+          review_count: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       get_user_role: {
@@ -256,6 +375,7 @@ export type Database = {
       }
     }
     Enums: {
+      provider_type: "restaurant" | "independent_caterer" | "cloud_kitchen"
       user_role: "customer" | "provider" | "organizer"
     }
     CompositeTypes: {
@@ -372,6 +492,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      provider_type: ["restaurant", "independent_caterer", "cloud_kitchen"],
       user_role: ["customer", "provider", "organizer"],
     },
   },

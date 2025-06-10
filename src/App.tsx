@@ -16,6 +16,10 @@ import OrganizerDashboard from "./pages/OrganizerDashboard";
 import PlanEvent from "./pages/PlanEvent";
 import MenuBuilder from "./pages/MenuBuilder";
 import AdminDashboard from "./pages/AdminDashboard";
+import Restaurants from "./pages/Restaurants";
+import Caterers from "./pages/Caterers";
+import FoodItems from "./pages/FoodItems";
+import ProviderDetail from "./pages/ProviderDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +35,10 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/restaurants" element={<Restaurants />} />
+              <Route path="/caterers" element={<Caterers />} />
+              <Route path="/food-items" element={<FoodItems />} />
+              <Route path="/provider/:id" element={<ProviderDetail />} />
               
               {/* Protected Dashboard Routes */}
               <Route 

@@ -20,21 +20,27 @@ export interface FoodItem {
   updated_at: string;
 }
 
-export const useFoodItems = () => {
+export const useFoodItems = (providerId?: string) => {
   const [foodItems, setFoodItems] = useState<FoodItem[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   const { user } = useAuth();
 
   const fetchFoodItems = async () => {
-    if (!user) return;
-    
     try {
-      const { data, error } = await supabase
-        .from('food_items')
-        .select('*')
-        .eq('provider_id', user.id)
-        .order('created_at', { ascending: false });
+      let query = supabase.from('food_items').select('*');
+      
+      if (providerId) {
+        query = query.eq('provider_id', providerId);
+      } else if (user && !providerId) {
+        // If no providerId specified and user is logged in, get their items (for provider dashboard)
+        query = query.eq('provider_id', user.id);
+      } else {
+        // For public food items view, show all available items
+        query = query.eq('is_available', true);
+      }
+      
+      const { data, error } = await query.order('created_at', { ascending: false });
 
       if (error) throw error;
       setFoodItems(data || []);
@@ -111,7 +117,7 @@ export const useFoodItems = () => {
 
   useEffect(() => {
     fetchFoodItems();
-  }, [user]);
+  }, [user, providerId]);
 
   return {
     foodItems,
