@@ -3,7 +3,7 @@ export interface Profile {
   id: string;
   email: string;
   name: string | null;
-  role: 'customer' | 'organizer' | 'restaurant' | 'caterer';
+  role: 'customer'| 'provider'  | 'organizer' | 'restaurant' | 'caterer';
   created_at: string;
   updated_at: string;
 }
