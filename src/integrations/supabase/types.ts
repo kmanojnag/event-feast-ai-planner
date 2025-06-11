@@ -362,7 +362,12 @@ export type Database = {
     }
     Enums: {
       provider_type: "restaurant" | "independent_caterer" | "cloud_kitchen"
-      user_role: "customer" | "provider" | "organizer"
+      user_role:
+        | "customer"
+        | "provider"
+        | "organizer"
+        | "restaurant"
+        | "caterer"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -479,7 +484,7 @@ export const Constants = {
   public: {
     Enums: {
       provider_type: ["restaurant", "independent_caterer", "cloud_kitchen"],
-      user_role: ["customer", "provider", "organizer"],
+      user_role: ["customer", "provider", "organizer", "restaurant", "caterer"],
     },
   },
 } as const
