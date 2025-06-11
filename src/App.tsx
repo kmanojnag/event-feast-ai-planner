@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -50,9 +49,25 @@ const App = () => (
                 } 
               />
               <Route 
+                path="/dashboard/restaurant" 
+                element={
+                  <ProtectedRoute requiredRole="restaurant">
+                    <ProviderDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/dashboard/caterer" 
+                element={
+                  <ProtectedRoute requiredRole="caterer">
+                    <ProviderDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
                 path="/dashboard/provider" 
                 element={
-                  <ProtectedRoute requiredRole="provider">
+                  <ProtectedRoute requiredRole="restaurant">
                     <ProviderDashboard />
                   </ProtectedRoute>
                 } 
