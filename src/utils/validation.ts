@@ -49,8 +49,8 @@ export const nameSchema = z
     return /^[a-zA-Z\s\-']+$/.test(name.trim());
   }, 'Name can only contain letters, spaces, hyphens, and apostrophes');
 
-// User role validation
-export const userRoleSchema = z.enum(['customer', 'provider', 'organizer'], {
+// User role validation - updated to match database enum
+export const userRoleSchema = z.enum(['customer', 'organizer', 'restaurant', 'caterer'], {
   errorMap: () => ({ message: 'Please select a valid role' })
 });
 
