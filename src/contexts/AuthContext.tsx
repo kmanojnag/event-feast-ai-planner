@@ -52,7 +52,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .single();
 
       if (error) throw error;
-      setProfile(data);
+      
+      // Normalize "provider" role to "restaurant" for backward compatibility
+      const normalizedProfile = {
+        ...data,
+        role: data.role === 'provider' ? 'restaurant' : data.role
+      };
+      
+      setProfile(normalizedProfile);
       
       // Log security event
       console.log('Profile fetched successfully:', { 
