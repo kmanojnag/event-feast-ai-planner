@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -201,7 +200,8 @@ const Auth = () => {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="customer">Customer - Looking for catering</SelectItem>
-                        <SelectItem value="provider">Provider - Restaurant/Caterer</SelectItem>
+                        <SelectItem value="restaurant">Restaurant - Food provider</SelectItem>
+                        <SelectItem value="caterer">Caterer - Catering service</SelectItem>
                         <SelectItem value="organizer">Event Organizer - Manage events</SelectItem>
                       </SelectContent>
                     </Select>
