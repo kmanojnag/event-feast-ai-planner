@@ -13,6 +13,9 @@ import { useFoodItems } from "@/hooks/useFoodItems";
 import { useProviders } from "@/hooks/useProviders";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from '@/integrations/supabase/client';
+import type { Database } from '@/integrations/supabase/types';
+
+type FoodCategory = Database['public']['Enums']['food_category'];
 
 const MenuManager = () => {
   const { menus, createMenu, refetch: refetchMenus } = useMenus();
@@ -32,7 +35,7 @@ const MenuManager = () => {
   const [foodItemForm, setFoodItemForm] = useState({
     name: '',
     description: '',
-    category: 'veg',
+    category: 'veg' as FoodCategory,
     price_full_tray: '',
     price_half_tray: '',
     price_quarter_tray: '',
@@ -69,7 +72,7 @@ const MenuManager = () => {
 
       const { data, error } = await supabase
         .from('food_items')
-        .insert([{
+        .insert({
           menu_id: selectedMenuId,
           provider_id: selectedMenu.provider_id,
           name: foodItemForm.name,
@@ -83,7 +86,7 @@ const MenuManager = () => {
           is_vegetarian: foodItemForm.is_vegetarian,
           is_vegan: foodItemForm.is_vegan,
           is_available: foodItemForm.is_available
-        }])
+        })
         .select()
         .single();
 
@@ -97,7 +100,7 @@ const MenuManager = () => {
       setFoodItemForm({
         name: '',
         description: '',
-        category: 'veg',
+        category: 'veg' as FoodCategory,
         price_full_tray: '',
         price_half_tray: '',
         price_quarter_tray: '',
@@ -117,7 +120,7 @@ const MenuManager = () => {
     }
   };
 
-  const foodCategories = [
+  const foodCategories: FoodCategory[] = [
     'veg', 'non_veg', 'halal', 'jain', 'kosher', 'dessert', 'snacks', 
     'drinks', 'salad', 'rice', 'breads', 'fusion', 'regional', 
     'south_indian', 'north_indian', 'indochinese', 'tandoor'
@@ -256,7 +259,7 @@ const MenuManager = () => {
 
                 <div>
                   <Label htmlFor="category">Category</Label>
-                  <Select value={foodItemForm.category} onValueChange={(value) => setFoodItemForm({...foodItemForm, category: value})}>
+                  <Select value={foodItemForm.category} onValueChange={(value: FoodCategory) => setFoodItemForm({...foodItemForm, category: value})}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>

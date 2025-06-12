@@ -107,7 +107,12 @@ const FoodItemsGrid: React.FC = () => {
               )}
               
               <div className="flex items-center justify-between mb-3">
-                <span className="font-bold text-lg text-green-600">₹{item.price_per_tray}</span>
+                <div className="text-sm">
+                  <div className="font-bold text-lg text-green-600">${item.price_full_tray}</div>
+                  <div className="text-xs text-gray-500">
+                    Half: ${item.price_half_tray} | Quarter: ${item.price_quarter_tray}
+                  </div>
+                </div>
                 <div className="flex items-center text-sm text-gray-500">
                   <Users className="h-4 w-4 mr-1" />
                   {item.tray_size}

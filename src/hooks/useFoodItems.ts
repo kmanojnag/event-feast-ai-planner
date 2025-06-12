@@ -3,6 +3,9 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
+import type { Database } from '@/integrations/supabase/types';
+
+type FoodCategory = Database['public']['Enums']['food_category'];
 
 export interface FoodItem {
   id: string;
@@ -11,7 +14,7 @@ export interface FoodItem {
   name: string;
   description?: string;
   cuisine_type: string;
-  category: string;
+  category: FoodCategory;
   price_full_tray: number;
   price_half_tray: number;
   price_quarter_tray: number;
@@ -112,7 +115,11 @@ export const useFoodItems = (providerId?: string, menuId?: string) => {
 
       const { data, error } = await supabase
         .from('food_items')
-        .insert([{ ...itemData, provider_id: providerData.id }])
+        .insert({
+          ...itemData,
+          provider_id: providerData.id,
+          category: itemData.category as FoodCategory
+        })
         .select()
         .single();
 
@@ -138,9 +145,14 @@ export const useFoodItems = (providerId?: string, menuId?: string) => {
 
   const updateFoodItem = async (id: string, updates: Partial<FoodItem>) => {
     try {
+      const updateData: any = { ...updates };
+      if (updates.category) {
+        updateData.category = updates.category as FoodCategory;
+      }
+
       const { data, error } = await supabase
         .from('food_items')
-        .update(updates as any)
+        .update(updateData)
         .eq('id', id)
         .select()
         .single();
