@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -78,18 +77,41 @@ const ProviderDetail: React.FC = () => {
         if (foodItemsError) throw foodItemsError;
         setFoodItems(foodItemsData || []);
 
-        // Fetch reviews for this provider
+        // Fetch reviews for this provider with proper relation
         const { data: reviewsData, error: reviewsError } = await supabase
           .from('reviews')
           .select(`
-            *,
-            customer:profiles!reviews_customer_id_fkey(name)
+            id,
+            rating,
+            comment,
+            created_at,
+            customer_id,
+            provider_id
           `)
           .eq('provider_id', id)
           .order('created_at', { ascending: false });
 
         if (reviewsError) throw reviewsError;
-        setReviews(reviewsData || []);
+
+        // Fetch customer names separately to avoid relation errors
+        const transformedReviews = await Promise.all(
+          (reviewsData || []).map(async (review) => {
+            const { data: customerData } = await supabase
+              .from('profiles')
+              .select('name')
+              .eq('id', review.customer_id)
+              .single();
+
+            return {
+              ...review,
+              customer: {
+                name: customerData?.name || 'Anonymous'
+              }
+            };
+          })
+        );
+
+        setReviews(transformedReviews);
 
       } catch (error) {
         console.error('Error fetching provider details:', error);
