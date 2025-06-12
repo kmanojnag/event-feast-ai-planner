@@ -53,18 +53,21 @@ export const useOrders = () => {
       if (error) throw error;
 
       // Transform the data to ensure customer is properly typed
-      const transformedData = (data || []).map(order => ({
-        ...order,
-        customer: order.customer && 
-                  typeof order.customer === 'object' && 
-                  'name' in order.customer && 
-                  order.customer !== null
-          ? {
-              name: order.customer.name || 'Unknown',
-              email: order.customer.email || 'Unknown'
-            }
-          : undefined
-      }));
+      const transformedData = (data || []).map(order => {
+        const customer = order.customer;
+        return {
+          ...order,
+          customer: customer && 
+                    typeof customer === 'object' && 
+                    customer !== null &&
+                    'name' in customer
+            ? {
+                name: customer.name || 'Unknown',
+                email: customer.email || 'Unknown'
+              }
+            : undefined
+        };
+      });
 
       setOrders(transformedData);
     } catch (error) {
