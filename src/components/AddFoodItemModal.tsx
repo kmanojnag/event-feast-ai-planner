@@ -12,17 +12,21 @@ import { useFoodItems } from "@/hooks/useFoodItems";
 interface AddFoodItemModalProps {
   open: boolean;
   onClose: () => void;
+  menuId?: string;
 }
 
-const AddFoodItemModal: React.FC<AddFoodItemModalProps> = ({ open, onClose }) => {
+const AddFoodItemModal: React.FC<AddFoodItemModalProps> = ({ open, onClose, menuId }) => {
   const { createFoodItem } = useFoodItems();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     description: '',
     cuisine_type: '',
-    price_per_tray: '',
-    tray_size: '',
+    category: 'veg' as const,
+    price_full_tray: '',
+    price_half_tray: '',
+    price_quarter_tray: '',
+    tray_size: 'Available in multiple sizes',
     is_vegetarian: false,
     is_vegan: false,
     is_available: true
@@ -31,17 +35,21 @@ const AddFoodItemModal: React.FC<AddFoodItemModalProps> = ({ open, onClose }) =>
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.name || !formData.cuisine_type || !formData.price_per_tray || !formData.tray_size) {
+    if (!formData.name || !formData.cuisine_type || !formData.price_full_tray || !formData.price_half_tray || !formData.price_quarter_tray) {
       return;
     }
 
     setLoading(true);
     
     const success = await createFoodItem({
+      menu_id: menuId,
       name: formData.name,
       description: formData.description,
       cuisine_type: formData.cuisine_type,
-      price_per_tray: parseFloat(formData.price_per_tray),
+      category: formData.category,
+      price_full_tray: parseFloat(formData.price_full_tray),
+      price_half_tray: parseFloat(formData.price_half_tray),
+      price_quarter_tray: parseFloat(formData.price_quarter_tray),
       tray_size: formData.tray_size,
       is_vegetarian: formData.is_vegetarian,
       is_vegan: formData.is_vegan,
@@ -55,8 +63,11 @@ const AddFoodItemModal: React.FC<AddFoodItemModalProps> = ({ open, onClose }) =>
         name: '',
         description: '',
         cuisine_type: '',
-        price_per_tray: '',
-        tray_size: '',
+        category: 'veg' as const,
+        price_full_tray: '',
+        price_half_tray: '',
+        price_quarter_tray: '',
+        tray_size: 'Available in multiple sizes',
         is_vegetarian: false,
         is_vegan: false,
         is_available: true
@@ -90,19 +101,13 @@ const AddFoodItemModal: React.FC<AddFoodItemModalProps> = ({ open, onClose }) =>
 
             <div className="space-y-2">
               <Label htmlFor="cuisine_type">Cuisine Type *</Label>
-              <Select value={formData.cuisine_type} onValueChange={(value) => setFormData(prev => ({ ...prev, cuisine_type: value }))}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select cuisine" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="indian">Indian</SelectItem>
-                  <SelectItem value="chinese">Chinese</SelectItem>
-                  <SelectItem value="italian">Italian</SelectItem>
-                  <SelectItem value="mexican">Mexican</SelectItem>
-                  <SelectItem value="continental">Continental</SelectItem>
-                  <SelectItem value="fusion">Fusion</SelectItem>
-                </SelectContent>
-              </Select>
+              <Input
+                id="cuisine_type"
+                placeholder="e.g., North Indian"
+                value={formData.cuisine_type}
+                onChange={(e) => setFormData(prev => ({ ...prev, cuisine_type: e.target.value }))}
+                required
+              />
             </div>
           </div>
 
@@ -116,26 +121,61 @@ const AddFoodItemModal: React.FC<AddFoodItemModalProps> = ({ open, onClose }) =>
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="category">Category *</Label>
+            <Select value={formData.category} onValueChange={(value) => setFormData(prev => ({ ...prev, category: value as any }))}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="veg">Vegetarian</SelectItem>
+                <SelectItem value="non_veg">Non-Vegetarian</SelectItem>
+                <SelectItem value="halal">Halal</SelectItem>
+                <SelectItem value="jain">Jain</SelectItem>
+                <SelectItem value="kosher">Kosher</SelectItem>
+                <SelectItem value="dessert">Dessert</SelectItem>
+                <SelectItem value="snacks">Snacks</SelectItem>
+                <SelectItem value="drinks">Drinks</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="price_per_tray">Price per Tray (₹) *</Label>
+              <Label htmlFor="price_full_tray">Full Tray Price ($) *</Label>
               <Input
-                id="price_per_tray"
+                id="price_full_tray"
                 type="number"
-                placeholder="e.g., 2500"
-                value={formData.price_per_tray}
-                onChange={(e) => setFormData(prev => ({ ...prev, price_per_tray: e.target.value }))}
+                step="0.01"
+                placeholder="e.g., 250"
+                value={formData.price_full_tray}
+                onChange={(e) => setFormData(prev => ({ ...prev, price_full_tray: e.target.value }))}
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="tray_size">Tray Size *</Label>
+              <Label htmlFor="price_half_tray">Half Tray Price ($) *</Label>
               <Input
-                id="tray_size"
-                placeholder="e.g., Serves 10-12 people"
-                value={formData.tray_size}
-                onChange={(e) => setFormData(prev => ({ ...prev, tray_size: e.target.value }))}
+                id="price_half_tray"
+                type="number"
+                step="0.01"
+                placeholder="e.g., 150"
+                value={formData.price_half_tray}
+                onChange={(e) => setFormData(prev => ({ ...prev, price_half_tray: e.target.value }))}
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="price_quarter_tray">Quarter Tray Price ($) *</Label>
+              <Input
+                id="price_quarter_tray"
+                type="number"
+                step="0.01"
+                placeholder="e.g., 80"
+                value={formData.price_quarter_tray}
+                onChange={(e) => setFormData(prev => ({ ...prev, price_quarter_tray: e.target.value }))}
                 required
               />
             </div>

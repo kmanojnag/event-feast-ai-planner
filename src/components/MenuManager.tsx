@@ -56,15 +56,33 @@ const MenuManager = () => {
     e.preventDefault();
     
     try {
+      // Get provider_id from the selected menu
+      const selectedMenu = menus.find(m => m.id === selectedMenuId);
+      if (!selectedMenu) {
+        toast({
+          title: "Error",
+          description: "Selected menu not found",
+          variant: "destructive"
+        });
+        return;
+      }
+
       const { data, error } = await supabase
         .from('food_items')
         .insert([{
-          ...foodItemForm,
           menu_id: selectedMenuId,
+          provider_id: selectedMenu.provider_id,
+          name: foodItemForm.name,
+          description: foodItemForm.description,
+          category: foodItemForm.category,
+          cuisine_type: foodItemForm.cuisine_type,
           price_full_tray: parseFloat(foodItemForm.price_full_tray),
           price_half_tray: parseFloat(foodItemForm.price_half_tray),
           price_quarter_tray: parseFloat(foodItemForm.price_quarter_tray),
-          tray_size: 'Available in multiple sizes'
+          tray_size: 'Available in multiple sizes',
+          is_vegetarian: foodItemForm.is_vegetarian,
+          is_vegan: foodItemForm.is_vegan,
+          is_available: foodItemForm.is_available
         }])
         .select()
         .single();

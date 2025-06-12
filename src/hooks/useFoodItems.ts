@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -6,7 +7,7 @@ import { useAuth } from '@/contexts/AuthContext';
 export interface FoodItem {
   id: string;
   menu_id?: string;
-  provider_id?: string;
+  provider_id: string;
   name: string;
   description?: string;
   cuisine_type: string;
@@ -14,7 +15,6 @@ export interface FoodItem {
   price_full_tray: number;
   price_half_tray: number;
   price_quarter_tray: number;
-  price_per_tray?: number; // For backward compatibility
   tray_size: string;
   is_vegetarian: boolean;
   is_vegan: boolean;
@@ -94,9 +94,25 @@ export const useFoodItems = (providerId?: string, menuId?: string) => {
     if (!user) return null;
 
     try {
+      // Get provider_id for the current user
+      const { data: providerData } = await supabase
+        .from('providers')
+        .select('id')
+        .eq('user_id', user.id)
+        .single();
+
+      if (!providerData) {
+        toast({
+          title: "Error",
+          description: "Provider profile not found",
+          variant: "destructive"
+        });
+        return null;
+      }
+
       const { data, error } = await supabase
         .from('food_items')
-        .insert([{ ...itemData, provider_id: user.id }])
+        .insert([{ ...itemData, provider_id: providerData.id }])
         .select()
         .single();
 
@@ -124,7 +140,7 @@ export const useFoodItems = (providerId?: string, menuId?: string) => {
     try {
       const { data, error } = await supabase
         .from('food_items')
-        .update(updates)
+        .update(updates as any)
         .eq('id', id)
         .select()
         .single();
