@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  requiredRole?: 'customer' | 'restaurant' | 'caterer' | 'organizer';
+  requiredRole?: 'customer' | 'restaurant' | 'caterer' | 'organizer' | 'admin';
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole }) => {

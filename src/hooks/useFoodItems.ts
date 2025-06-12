@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -6,11 +5,16 @@ import { useAuth } from '@/contexts/AuthContext';
 
 export interface FoodItem {
   id: string;
-  provider_id: string;
+  menu_id?: string;
+  provider_id?: string;
   name: string;
   description?: string;
   cuisine_type: string;
-  price_per_tray: number;
+  category: string;
+  price_full_tray: number;
+  price_half_tray: number;
+  price_quarter_tray: number;
+  price_per_tray?: number; // For backward compatibility
   tray_size: string;
   is_vegetarian: boolean;
   is_vegan: boolean;
@@ -20,7 +24,7 @@ export interface FoodItem {
   updated_at: string;
 }
 
-export const useFoodItems = (providerId?: string) => {
+export const useFoodItems = (providerId?: string, menuId?: string) => {
   const [foodItems, setFoodItems] = useState<FoodItem[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
@@ -28,13 +32,43 @@ export const useFoodItems = (providerId?: string) => {
 
   const fetchFoodItems = async () => {
     try {
-      let query = supabase.from('food_items').select('*');
+      let query = supabase.from('food_items').select(`
+        *,
+        menu:menus(title, provider_id)
+      `);
       
-      if (providerId) {
-        query = query.eq('provider_id', providerId);
-      } else if (user && !providerId) {
-        // If no providerId specified and user is logged in, get their items (for provider dashboard)
-        query = query.eq('provider_id', user.id);
+      if (menuId) {
+        query = query.eq('menu_id', menuId);
+      } else if (providerId) {
+        // Get food items from all menus of this provider
+        const { data: menus } = await supabase
+          .from('menus')
+          .select('id')
+          .eq('provider_id', providerId);
+        
+        if (menus && menus.length > 0) {
+          const menuIds = menus.map(m => m.id);
+          query = query.in('menu_id', menuIds);
+        }
+      } else if (user && !providerId && !menuId) {
+        // For provider dashboard, get their items
+        const { data: providerData } = await supabase
+          .from('providers')
+          .select('id')
+          .eq('user_id', user.id)
+          .single();
+        
+        if (providerData) {
+          const { data: menus } = await supabase
+            .from('menus')
+            .select('id')
+            .eq('provider_id', providerData.id);
+          
+          if (menus && menus.length > 0) {
+            const menuIds = menus.map(m => m.id);
+            query = query.in('menu_id', menuIds);
+          }
+        }
       } else {
         // For public food items view, show all available items
         query = query.eq('is_available', true);
@@ -117,7 +151,7 @@ export const useFoodItems = (providerId?: string) => {
 
   useEffect(() => {
     fetchFoodItems();
-  }, [user, providerId]);
+  }, [user, providerId, menuId]);
 
   return {
     foodItems,
