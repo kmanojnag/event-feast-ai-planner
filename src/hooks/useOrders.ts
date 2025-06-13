@@ -54,17 +54,21 @@ export const useOrders = () => {
       // Transform the data to ensure customer is properly typed
       const transformedData = (data || []).map(order => {
         const customerData = order.customer;
+        let customerInfo: { name: string; email: string } | undefined = undefined;
+        
+        if (customerData && 
+            typeof customerData === 'object' && 
+            customerData !== null &&
+            'name' in customerData) {
+          customerInfo = {
+            name: (customerData as { name?: string }).name || 'Unknown',
+            email: (customerData as { email?: string }).email || 'Unknown'
+          };
+        }
+
         return {
           ...order,
-          customer: customerData && 
-                    typeof customerData === 'object' && 
-                    customerData !== null &&
-                    'name' in customerData
-            ? {
-                name: (customerData as { name?: string }).name || 'Unknown',
-                email: (customerData as { email?: string }).email || 'Unknown'
-              }
-            : undefined
+          customer: customerInfo
         };
       });
 
