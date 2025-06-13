@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -62,8 +61,8 @@ export const useOrders = () => {
                     customerData !== null &&
                     'name' in customerData
             ? {
-                name: customerData?.name || 'Unknown',
-                email: customerData?.email || 'Unknown'
+                name: (customerData as { name?: string }).name || 'Unknown',
+                email: (customerData as { email?: string }).email || 'Unknown'
               }
             : undefined
         };
