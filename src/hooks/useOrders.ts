@@ -54,16 +54,16 @@ export const useOrders = () => {
 
       // Transform the data to ensure customer is properly typed
       const transformedData = (data || []).map(order => {
-        const customer = order.customer;
+        const customerData = order.customer;
         return {
           ...order,
-          customer: customer && 
-                    typeof customer === 'object' && 
-                    customer !== null &&
-                    'name' in customer
+          customer: customerData && 
+                    typeof customerData === 'object' && 
+                    customerData !== null &&
+                    'name' in customerData
             ? {
-                name: customer.name || 'Unknown',
-                email: customer.email || 'Unknown'
+                name: (customerData as any).name || 'Unknown',
+                email: (customerData as any).email || 'Unknown'
               }
             : undefined
         };
