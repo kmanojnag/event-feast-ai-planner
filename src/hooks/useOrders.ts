@@ -56,13 +56,14 @@ export const useOrders = () => {
         const customerData = order.customer;
         let customerInfo: { name: string; email: string } | undefined = undefined;
         
-        if (customerData && 
-            typeof customerData === 'object' && 
-            customerData !== null &&
-            'name' in customerData) {
+        if (
+          customerData !== null &&
+          typeof customerData === 'object' &&
+          'name' in customerData
+        ) {
           customerInfo = {
-            name: (customerData as { name?: string }).name || 'Unknown',
-            email: (customerData as { email?: string }).email || 'Unknown'
+            name: (customerData as { name?: string | null }).name ?? 'Unknown',
+            email: (customerData as { email?: string | null }).email ?? 'Unknown'
           };
         }
 
